@@ -29,15 +29,15 @@ const redis = Redis.createClient(endpoint);
 const filename = basename(file);
 const entry = {ref, date, filename};
 
-readFile(file, "binary", (err, content) => {
+readFile(file, (err, content) => {
     if (err) return fail(err, 10);
 
-    entry.content = content;
+    entry.content = content.toString("base64");
 
     redis.lpush(key, JSON.stringify(entry), (err, result) => {
         if (err) return fail(err);
 
-        console.log(`dropped file '${filename}'; ${result} pending`);
+        console.log(`dropped file '${filename}' into "${key}"; ${result} pending`);
 
         redis.quit();
 

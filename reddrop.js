@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const {readFile} = require("fs");
+const {readFile, unlink} = require("fs");
 const {basename} = require("path");
 const Redis = require("redis");
 const fail = require("@zingle/fail");
@@ -35,10 +35,15 @@ readFile(file, "binary", (err, content) => {
     entry.content = content;
 
     redis.lpush(key, JSON.stringify(entry), (err, result) => {
-        if (err) console.error(err);
-        else console.log(`dropped file '${filename}'; ${result} pending`);
+        if (err) return fail(err);
+
+        console.log(`dropped file '${filename}'; ${result} pending`);
 
         redis.quit();
+
+        unlink(file, err => {
+            if (err) console.warn(`could not remove '${file}' (${err.message})`);
+        });
     });
 });
 

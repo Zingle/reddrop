@@ -1,0 +1,22 @@
+{
+  "name": "@zingle/reddrop",
+  "version": "0.9.0",
+  "description": "drop files into redis dropbox",
+  "bin": {
+      "reddrop": "reddrop.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Zingle/reddrop.git"
+  },
+  "author": "Richard Remer <reanjr@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Zingle/reddrop/issues"
+  },
+  "homepage": "https://github.com/Zingle/reddrop#readme",
+  "dependencies": {
+    "@zingle/fail": "0.0.1",
+    "redis": "^2.8.0"
+  }
+}
